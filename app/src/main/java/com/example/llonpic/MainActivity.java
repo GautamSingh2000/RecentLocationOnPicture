@@ -18,6 +18,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -203,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
    {
        FileOutputStream outputStream = null;
        File file = Environment.getExternalStorageDirectory();
-       File dir = new File(file.getAbsolutePath() + "/LLOnPic");
+       File dir = new File(file.getAbsolutePath() + "/LLOnPic/");
        dir.mkdir();
 
        String filename = String.format("%d.png",System.currentTimeMillis());
-       File outFile =  new File(dir + filename);
+       File outFile =  new File(dir , filename);
        try{
            outputStream = new FileOutputStream(outFile);
        } catch (Exception e) {
@@ -224,5 +225,6 @@ public class MainActivity extends AppCompatActivity {
        } catch (Exception e) {
            throw new RuntimeException(e);
        }
+       MediaScannerConnection.scanFile(this, new String[]{outFile.getPath()}, new String[]{"image/jpeg"}, null);
    }
 }
